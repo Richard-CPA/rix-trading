@@ -1,0 +1,95 @@
+# SPY Trade Log — rix-trading
+# OptionsFunding Growth 100K Evaluation
+# Format: YAML (append new trades at bottom)
+
+trades:
+  - id: 1
+    date: "2026-07-29"
+    type: iron_condor
+    underlying: SPY
+    expiry: "2026-07-29"
+    dte: 0
+    
+    legs:
+      - side: short
+        strike: 731
+        type: put
+        qty: 8
+        avg_open: 1.06
+        avg_close: 0.32
+        pnl: 581.60
+      - side: long
+        strike: 728
+        type: put
+        qty: 8
+        avg_open: 0.56
+        avg_close: 0.14
+        pnl: -346.40
+      - side: short
+        strike: 748
+        type: call
+        qty: 8
+        avg_open: 0.15
+        avg_close: 0.18
+        pnl: -34.40
+      - side: long
+        strike: 751
+        type: call
+        qty: 8
+        avg_open: 0.05
+        avg_close: 0.06
+        pnl: -2.40
+    
+    total_fees: 41.60
+    net_pnl: 198.40
+    return_pct: 13.6
+    
+    times:
+      open: "2026-07-29 15:58 ET"
+      close: "2026-07-29 20:02 ET"
+      held_hours: 4.07
+    
+    market_context:
+      fomc_day: true
+      entry_method: pre_fomc
+      exit_method: post_fomc_iv_crush
+    
+    polygon_data:
+      - contract: "O:SPY260729C00748000"
+        day_high: 0.32
+        day_low: 0.02
+        day_close: 0.02
+        day_volume: 75760
+        delta: 0.0152
+        iv: 0.271
+        open_interest: 14837
+      - contract: "O:SPY260729C00751000"
+        day_high: 0.10
+        day_low: 0.01
+        day_close: 0.01
+        day_volume: 27196
+        delta: 0.0082
+        iv: 0.319
+        open_interest: 5548
+      - contract: "O:SPY260729P00728000"
+        day_high: 1.50
+        day_low: 0.01
+        day_close: 0.01
+        day_volume: 129672
+        delta: -0.0143
+        iv: 0.291
+        open_interest: 5873
+      - contract: "O:SPY260729P00731000"
+        day_high: 2.66
+        day_low: 0.02
+        day_close: 0.05
+        day_volume: 145765
+        delta: -0.0419
+        iv: 0.258
+        open_interest: 6762
+    
+    progress:
+      cumulative_pnl: 198.40
+      target: 12000
+      winning_days: 1
+      consistency_ok: true  # $198 = 1.65% of $12k < 30%
