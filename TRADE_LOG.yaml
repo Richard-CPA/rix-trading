@@ -139,8 +139,52 @@ trades:
       type: post_fomc_iv_scalp
       note: "32m scalp — IV crush trade after extended hours"
 
+  - id: 3
+    date: "2026-07-31"
+    type: bull_put_credit_spread
+    underlying: SPY
+    expiry: "2026-07-31"
+    dte: 0
+
+    legs:
+      - side: short
+        strike: 744
+        type: put
+        qty: 12
+        avg_open: 1.04
+        avg_close: 2.17
+        pnl: -1371.60
+      - side: long
+        strike: 741
+        type: put
+        qty: 12
+        avg_open: 0.46
+        avg_close: 1.11
+        pnl: 764.40
+
+    total_fees: 31.20
+    net_pnl: -607.20
+    return_pct: -33.7
+
+    times:
+      open: "2026-07-31 09:36 ET"
+      close: "2026-07-31 09:40 ET"
+      held_minutes: 4
+
+    market_context:
+      post_fomc_day: true
+      entry_at_open_fade: true
+      note: "ATM strikes at open — SPY faded $744→$741.8 in 4min. Managed loss, not max loss."
+
+    lessons:
+      - "No ATM strikes on 0DTE at market open"
+      - "Wait 15-30 min after open for stabilization"
+      - "Original plan said strikes 1-1.5% OTM — deviation caused this loss"
+
     progress:
-      cumulative_pnl: 348.80
+      cumulative_pnl: -258.40
       target: 12000
       winning_days: 2
-      consistency_note: "Day2: $150 / $349 = 43% — but only 2 winning days so far, needs 4+ total"
+      losing_days: 1
+      drawdown_used_pct: 0.26
+      consistency_note: "2 winning days. Needs 4+. Loss day doesn't count in denominator."
