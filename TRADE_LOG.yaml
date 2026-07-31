@@ -181,10 +181,10 @@ trades:
       - "Wait 15-30 min after open for stabilization"
       - "Original plan said strikes 1-1.5% OTM — deviation caused this loss"
 
-    progress:
-      cumulative_pnl: -258.40
-      target: 12000
-      winning_days: 2
-      losing_days: 1
-      drawdown_used_pct: 0.26
-      consistency_note: "2 winning days. Needs 4+. Loss day doesn't count in denominator."
+progress:
+  cumulative_pnl: -258.40
+  target: 12000
+  winning_days: 2
+  losing_days: 1
+  drawdown_used_pct: 0.26
+  consistency_note: "2 winning days. Needs 4+. Loss day doesn't count in denominator."
