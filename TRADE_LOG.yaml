@@ -181,10 +181,45 @@ trades:
       - "Wait 15-30 min after open for stabilization"
       - "Original plan said strikes 1-1.5% OTM — deviation caused this loss"
 
+  - id: 4
+    date: "2026-08-03"
+    type: bull_put_credit_spread
+    underlying: SPY
+    expiry: "2026-08-03"
+    dte: 0
+
+    legs:
+      - side: short
+        strike: 749
+        type: put
+        qty: 20
+        avg_open: 0.82
+        avg_close: 0.40
+        pnl: 814.00
+      - side: long
+        strike: 746
+        type: put
+        qty: 20
+        avg_open: 0.37
+        avg_close: 0.18
+        pnl: -406.00
+
+    total_fees: 52.00
+    net_pnl: 408.00
+    return_pct: 17.1
+
+    times:
+      open: "2026-08-03 15:40 ET"
+      close: "2026-08-03 15:53 ET"
+      held_minutes: 13
+
+    market_context:
+      type: momentum_bull_put
+      note: "With-trend trade after V-recovery ($741→$751). TP at ~51% credit in 13min. Textbook execution."
+
 progress:
-  cumulative_pnl: -258.40
+  cumulative_pnl: 149.60
   target: 12000
-  winning_days: 2
+  winning_days: 3
   losing_days: 1
-  drawdown_used_pct: 0.26
-  consistency_note: "2 winning days. Needs 4+. Loss day doesn't count in denominator."
+  consistency_note: "Best day $408 / $756.80 = 54% — needs 2-3 more winning days (≥$600 combined) to get under 30% cap"
