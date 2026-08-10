@@ -1,0 +1,225 @@
+# SPY Trade Log — rix-trading
+# OptionsFunding Growth 100K Evaluation
+# Format: YAML (append new trades at bottom)
+
+trades:
+  - id: 1
+    date: "2026-07-29"
+    type: iron_condor
+    underlying: SPY
+    expiry: "2026-07-29"
+    dte: 0
+    
+    legs:
+      - side: short
+        strike: 731
+        type: put
+        qty: 8
+        avg_open: 1.06
+        avg_close: 0.32
+        pnl: 581.60
+      - side: long
+        strike: 728
+        type: put
+        qty: 8
+        avg_open: 0.56
+        avg_close: 0.14
+        pnl: -346.40
+      - side: short
+        strike: 748
+        type: call
+        qty: 8
+        avg_open: 0.15
+        avg_close: 0.18
+        pnl: -34.40
+      - side: long
+        strike: 751
+        type: call
+        qty: 8
+        avg_open: 0.05
+        avg_close: 0.06
+        pnl: -2.40
+    
+    total_fees: 41.60
+    net_pnl: 198.40
+    return_pct: 13.6
+    
+    times:
+      open: "2026-07-29 15:58 ET"
+      close: "2026-07-29 20:02 ET"
+      held_hours: 4.07
+    
+    market_context:
+      fomc_day: true
+      entry_method: pre_fomc
+      exit_method: post_fomc_iv_crush
+    
+    polygon_data:
+      - contract: "O:SPY260729C00748000"
+        day_high: 0.32
+        day_low: 0.02
+        day_close: 0.02
+        day_volume: 75760
+        delta: 0.0152
+        iv: 0.271
+        open_interest: 14837
+      - contract: "O:SPY260729C00751000"
+        day_high: 0.10
+        day_low: 0.01
+        day_close: 0.01
+        day_volume: 27196
+        delta: 0.0082
+        iv: 0.319
+        open_interest: 5548
+      - contract: "O:SPY260729P00728000"
+        day_high: 1.50
+        day_low: 0.01
+        day_close: 0.01
+        day_volume: 129672
+        delta: -0.0143
+        iv: 0.291
+        open_interest: 5873
+      - contract: "O:SPY260729P00731000"
+        day_high: 2.66
+        day_low: 0.02
+        day_close: 0.05
+        day_volume: 145765
+        delta: -0.0419
+        iv: 0.258
+        open_interest: 6762
+    
+  - id: 2
+    date: "2026-07-30"
+    type: iron_condor
+    underlying: SPY
+    expiry: "2026-07-30"
+    dte: 0
+
+    legs:
+      - side: short
+        strike: 731
+        type: put
+        qty: 8
+        avg_open: 0.91
+        avg_close: 0.37
+        pnl: 421.60
+      - side: long
+        strike: 728
+        type: put
+        qty: 8
+        avg_open: 0.44
+        avg_close: 0.17
+        pnl: -226.40
+      - side: short
+        strike: 745
+        type: call
+        qty: 8
+        avg_open: 0.03
+        avg_close: 0.05
+        pnl: -26.40
+      - side: long
+        strike: 748
+        type: call
+        qty: 8
+        avg_open: 0.02
+        avg_close: 0.01
+        pnl: -18.40
+
+    total_fees: 41.60
+    net_pnl: 150.40
+    return_pct: 13.4
+
+    times:
+      open: "2026-07-30 17:15 ET"
+      close: "2026-07-30 17:47 ET"
+      held_minutes: 32
+
+    market_context:
+      post_fomc_day: true
+      type: post_fomc_iv_scalp
+      note: "32m scalp — IV crush trade after extended hours"
+
+  - id: 3
+    date: "2026-07-31"
+    type: bull_put_credit_spread
+    underlying: SPY
+    expiry: "2026-07-31"
+    dte: 0
+
+    legs:
+      - side: short
+        strike: 744
+        type: put
+        qty: 12
+        avg_open: 1.04
+        avg_close: 2.17
+        pnl: -1371.60
+      - side: long
+        strike: 741
+        type: put
+        qty: 12
+        avg_open: 0.46
+        avg_close: 1.11
+        pnl: 764.40
+
+    total_fees: 31.20
+    net_pnl: -607.20
+    return_pct: -33.7
+
+    times:
+      open: "2026-07-31 09:36 ET"
+      close: "2026-07-31 09:40 ET"
+      held_minutes: 4
+
+    market_context:
+      post_fomc_day: true
+      entry_at_open_fade: true
+      note: "ATM strikes at open — SPY faded $744→$741.8 in 4min. Managed loss, not max loss."
+
+    lessons:
+      - "No ATM strikes on 0DTE at market open"
+      - "Wait 15-30 min after open for stabilization"
+      - "Original plan said strikes 1-1.5% OTM — deviation caused this loss"
+
+  - id: 4
+    date: "2026-08-03"
+    type: bull_put_credit_spread
+    underlying: SPY
+    expiry: "2026-08-03"
+    dte: 0
+
+    legs:
+      - side: short
+        strike: 749
+        type: put
+        qty: 20
+        avg_open: 0.82
+        avg_close: 0.40
+        pnl: 814.00
+      - side: long
+        strike: 746
+        type: put
+        qty: 20
+        avg_open: 0.37
+        avg_close: 0.18
+        pnl: -406.00
+
+    total_fees: 52.00
+    net_pnl: 408.00
+    return_pct: 17.1
+
+    times:
+      open: "2026-08-03 15:40 ET"
+      close: "2026-08-03 15:53 ET"
+      held_minutes: 13
+
+    market_context:
+      type: momentum_bull_put
+      note: "With-trend trade after V-recovery ($741→$751). TP at ~51% credit in 13min. Textbook execution."
+
+progress:
+  cumulative_pnl: 149.60
+  target: 12000
+  winning_days: 3
+  losing_days: 1
+  consistency_note: "Best day $408 / $756.80 = 54% — needs 2-3 more winning days (≥$600 combined) to get under 30% cap"

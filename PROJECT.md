@@ -21,3 +21,5 @@
 - `/opt/rix-trading/EVALUATION_STRATEGY.md` — Hauptstrategie
 - `/opt/rix-trading/FOMC_20260729.md` — Heutiger FOMC-Trade
 - `/opt/rix-trading/get_options_data.py` — Options-Daten-Fetcher
+- `/opt/rix-trading/TRADE_LOG.yaml` — Trade-Log (Daten)
+- `/opt/rix-trading/trade_log.py` — Log-Tooling: `status` / `add` / `check` (trackt Target, DD, Consistency automatisch)
