@@ -10,12 +10,13 @@ Usage:
 
 import json
 import math
+import statistics
 import sys
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 import requests
-import yfinance as yf
+import rix_compat as yf  # RixTrade zuerst, yfinance nur als Rueckfall
 import numpy as np
 
 # ─── Konstanten ────────────────────────────────────────────────────────────
@@ -159,7 +160,69 @@ def fetch_yahoo_data():
     }, None
 
 
+def fetch_rix_chain():
+    """SPY-Kette von RixTrade, in der Feldform der CBOE-Antwort.
+
+    Damit bleiben die Auswertungen unveraendert: gleiche Schluessel
+    (`option`, `bid`, `ask`, `delta`, `gamma`, `open_interest`, `volume`),
+    gleiche Gruppierung nach YYMMDD.
+    """
+    import sys as _sys
+    _sys.path.insert(0, "/opt/data/scripts")
+    try:
+        import rix_feed
+        p = rix_feed.kette("SPY")
+    except Exception as e:
+        return None, f"RixTrade-Fehler: {e}"
+
+    contracts = p.get("contracts") or []
+    if not contracts:
+        return None, "RixTrade: keine Kontrakte"
+
+    by_expiry = {}
+    ivs = []
+    for c in contracts:
+        try:
+            yy = datetime.strptime(str(c["expiration"]), "%Y-%m-%d").strftime("%y%m%d")
+            strike = float(c["strike"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        right = "C" if str(c.get("right", "")).upper().startswith("C") else "P"
+        sym = "SPY%s%s%08d" % (yy, right, int(round(strike * 1000)))
+        if c.get("iv"):
+            ivs.append(float(c["iv"]))
+        by_expiry.setdefault(yy, []).append({
+            "option": sym,
+            "bid": c.get("bid"),
+            "ask": c.get("ask"),
+            "delta": c.get("delta"),
+            "gamma": c.get("gamma"),
+            "open_interest": c.get("open_interest"),
+            "volume": c.get("volume"),
+            "iv": c.get("iv"),
+        })
+
+    iv30 = statistics.median(ivs) if ivs else None
+    return {
+        "cboe_spot": p.get("underlying_price"),
+        "iv30": iv30,
+        "expiries": sorted(by_expiry.keys()),
+        "by_expiry": by_expiry,
+    }, None
+
+
 def fetch_cboe_chain():
+    """RixTrade zuerst, CBOE nur als Rueckfall (15 Min Verzoegerung)."""
+    rix, fehler = fetch_rix_chain()
+    if rix is not None:
+        return rix, None
+    cboe, cboe_fehler = _fetch_cboe_chain_raw()
+    if cboe is None:
+        return None, fehler or cboe_fehler
+    return cboe, None
+
+
+def _fetch_cboe_chain_raw():
     """Holt SPY Options-Chain von CBOE (kostenlos, ~15min delayed)."""
     try:
         resp = requests.get(CBOE_URL, timeout=15)

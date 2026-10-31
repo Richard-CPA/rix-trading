@@ -14,7 +14,7 @@ import sys
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
-import yfinance as yf
+import rix_compat as yf  # RixTrade zuerst, yfinance nur als Rueckfall
 import requests
 
 BERLIN = ZoneInfo("Europe/Berlin")
